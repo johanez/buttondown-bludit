@@ -16,12 +16,11 @@ Download and extract into `bl-blugins`.
 ### How it works
 
 - Emails will be sent for any that full fills the following criteria:
-  - not static
-  - not scheduled
-  - published
-  - creation date after the start date in the plug settings
-  - `no-index` option OFF (in page SEO settings, this can be used for excluding pages from the newsletter, e.g. for testing)
-  - not scheduled
+  - page i not static
+  - page is not scheduled
+  - page is published
+  - page creation date is _after_ the start date in the plugin settings
+  - page `no-index` option OFF (in page SEO settings, this can be used for excluding pages from the newsletter, e.g. for testing)
   - no newsletter for this page has been sent before. **For exceptions see _warnings_ below!.**
 - An email will be sent whenever a page is saved for the first time matching these criteria. This is normally the initial creation, or saving a draft page as published.
 - The mail body contains the cover image (optionally), the page title and the content (including html).
