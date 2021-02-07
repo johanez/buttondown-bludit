@@ -1,7 +1,8 @@
 # Buttondown Newsletter Plugin for [BluditCMS](www.blufit.com)
 
-[Buttondown.email](https://buttondown.email/) is a newsletter service that I prefer over other like e.g. MailChimp.
-I'm not affiliated with Buttondown in any other way then happily using there service.
+[Buttondown.email](https://buttondown.email/) is a newsletter service that I prefer over others like e.g. MailChimp.
+I'm not affiliated with Buttondown in any other way then happily using their service.
+This plugin uses the Buttondown API to automatically send a newsletter for new pages, e.g for subscribers to your blog. The mail contains the full page content.
 
 ## Instalation
 
@@ -15,12 +16,11 @@ Download and extract into `bl-blugins`.
 ### How it works
 
 - Emails will be sent for any that full fills the following criteria:
-  - not static
-  - not scheduled
-  - published
-  - creation date after the start date in the plug settings
-  - `no-index` option OFF (in page SEO settings, this can be used for excluding pages from the newsletter, e.g. for testing)
-  - not scheduled
+  - page i not static
+  - page is not scheduled
+  - page is published
+  - page creation date is _after_ the start date in the plugin settings
+  - page `no-index` option OFF (in page SEO settings, this can be used for excluding pages from the newsletter, e.g. for testing)
   - no newsletter for this page has been sent before. **For exceptions see _warnings_ below!.**
 - An email will be sent whenever a page is saved for the first time matching these criteria. This is normally the initial creation, or saving a draft page as published.
 - The mail body contains the cover image (optionally), the page title and the content (including html).
@@ -33,7 +33,7 @@ Download and extract into `bl-blugins`.
 
 ### Known Issues
 
-- A newsletter _should_ be sent when a a scheduled page is due and appears on the site. However, the internal trigger for this doesn't seem to work. You can (messily) patch this by adding `Theme::plugins('afterPageModify', array($pageKey));` in the `scheduler()` before `$saveDatabase = true;` in the file `pages.class.php`.
+- A newsletter _should_ be sent when a a scheduled page is due and appears on the site. However, the internal trigger for this [doesn't seem to work](https://github.com/bludit/bludit/issues/1307). You can (messily) patch this by adding the line `Theme::plugins('afterPageModify', array($pageKey));` into the function `scheduler()` before line `$saveDatabase = true;` in the file `pages.class.php`.
 
 ## License
 
