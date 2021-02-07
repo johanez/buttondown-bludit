@@ -6,7 +6,7 @@ This plugin uses the Buttondown API to automatically send a newsletter for new p
 
 ## Instalation
 
-Download and extract into `bl-blugins`.
+[Download](https://github.com/johanez/buttondown-bludit/archive/v1.1.zip) and extract into `bl-blugins`.
 
 ## Usage
 
