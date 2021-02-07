@@ -1,0 +1,20 @@
+{
+  "plugin-data": {
+    "name": "Buttondown Newsletter",
+    "description": "Sends a newsletter for new pages via buttondown.email."
+  },
+  "manual": "You need to create an buttondown.email account and enter the API key here. A mail is set once when page is created or set to publish (for all non-static, published, non-scheduled pages with 'no-index' unchecked.",
+  "api-key-hint": "Copy your API key from https://buttondown.email/settings/programming",
+  "send-after": "Send newsletters for pages created after:",
+  "send-after-tip": "Format: YYYY-MM-DD Hours:Minutes:Seconds",
+  "active": "Sending mails is:",
+  "on": "ON",
+  "off": "OFF",
+  "active-tip": "Set 'OFF' to temporally pause sending. Note emails for pages created while paused will be send later if the page is modified and saved and the plugin is active again.",
+  "include-cover": "Include the page cover image in the mail body?",
+  "include-cover-tip": "The image will appear before the title and content in the mail body.",
+  "subject-prefix": "Prefix for mail subject:",
+  "subject-prefix-tip": "The subject will consist of this plus the page title.",
+  "sent-list": "List of pages for which a newsletter was sent:",
+  "sent-list-tip": "No new email will be send for this pages, even if they are modified. (Unless you change the page slug.)"
+}
