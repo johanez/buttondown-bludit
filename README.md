@@ -1,7 +1,8 @@
 # Buttondown Newsletter Plugin for [BluditCMS](www.blufit.com)
 
-[Buttondown.email](https://buttondown.email/) is a newsletter service that I prefer over other like e.g. MailChimp.
-I'm not affiliated with Buttondown in any other way then happily using there service.
+[Buttondown.email](https://buttondown.email/) is a newsletter service that I prefer over others like e.g. MailChimp.
+I'm not affiliated with Buttondown in any other way then happily using their service.
+This plugin uses the Buttondown API to automatically send a newsletter for new pages, e.g for subscribers to your blog. The mail contains the full page content.
 
 ## Instalation
 
