@@ -34,7 +34,7 @@ Download and extract into `bl-blugins`.
 
 ### Known Issues
 
-- A newsletter _should_ be sent when a a scheduled page is due and appears on the site. However, the internal trigger for this doesn't seem to work. You can (messily) patch this by adding `Theme::plugins('afterPageModify', array($pageKey));` in the `scheduler()` before `$saveDatabase = true;` in the file `pages.class.php`.
+- A newsletter _should_ be sent when a a scheduled page is due and appears on the site. However, the internal trigger for this [doesn't seem to work](https://github.com/bludit/bludit/issues/1307). You can (messily) patch this by adding `Theme::plugins('afterPageModify', array($pageKey));` in the `scheduler()` before `$saveDatabase = true;` in the file `pages.class.php`.
 
 ## License
 
