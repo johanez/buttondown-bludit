@@ -9,7 +9,7 @@ class buttondown_newsletter extends Plugin {
 		// Fields and default values for the database of this plugin
 		$this->dbFields = array(
 			'apiKey'=>'', // APIKey form buttondown
-			'active'=> true,
+			'paused'=> false,
 			'startDate' => date('Y-m-d H:i:s'), // page creation date which newsletter will be send YYYY-MM-DD Hours:Minutes:Seconds
 			'sentEmails'=> json_encode(array()),
 			'includeCover' => false,
@@ -58,13 +58,13 @@ class buttondown_newsletter extends Plugin {
 		$html .= '<label><strong>Buttondown API Key</strong></label>';
 		$html .= '<input id="apiKey" name="apiKey" type="text" value="'.$this->getValue('apiKey').'">';
 		$html .= '<span class="tip">Copy your API key on https://buttondown.email/settings/programming </span>';
-		// Sending active
-		$html .= '<label>'.$L->get('active').'</label>';
-		$html .= '<select id="active" name="active" type="text">';
-		$html .= '<option value="true" '.($this->getValue('active')===true?'selected':'').'>'.$L->get('on').'</option>';
-		$html .= '<option value="false" '.($this->getValue('active')===false?'selected':'').'>'.$L->get('off').'</option>';
+		// Sending paused
+		$html .= '<label>'.$L->get('paused').'</label>';
+		$html .= '<select id="paused" name="paused" type="text">';
+		$html .= '<option value="true" '.($this->getValue('paused')===true?'selected':'').'>'.$L->get('is-paused').'</option>';
+		$html .= '<option value="false" '.($this->getValue('paused')===false?'selected':'').'>'.$L->get('is-active').'</option>';
 		$html .= '</select>';
-		$html .= '<span class="tip">'.$L->get('active-tip').'</span>';
+		$html .= '<span class="tip">'.$L->get('paused-tip').'</span>';
 
 		// Start date
 		$html .= '<label>'.$L->get('send-after').'</label>';
@@ -74,11 +74,11 @@ class buttondown_newsletter extends Plugin {
 		$html .= '<label>'.$L->get('subject-prefix').'</label>';
 		$html .= '<input id="subjectPrefix" name="subjectPrefix" type="text" value="'.$this->getValue('subjectPrefix').'">';
 		$html .= '<span class="tip">'.$L->get('subject-prefix-tip').'</span>';
-				// Sending active
+				// Sending paused
 		$html .= '<label>'.$L->get('include-cover').'</label>';
 		$html .= '<select id="includeCover" name="includeCover" type="text">';
-		$html .= '<option value="true" '.($this->getValue('includeCover')===true?'selected':'').'>'.$L->get('on').'</option>';
-		$html .= '<option value="false" '.($this->getValue('includeCover')===false?'selected':'').'>'.$L->get('off').'</option>';
+		$html .= '<option value="true" '.($this->getValue('includeCover')===true?'selected':'').'>'.$L->get('yes').'</option>';
+		$html .= '<option value="false" '.($this->getValue('includeCover')===false?'selected':'').'>'.$L->get('no').'</option>';
 		$html .= '</select>';
 		$html .= '<span class="tip">'.$L->get('include-cover-tip').'</span>';
 		$html .= '</div><hr>';
@@ -105,7 +105,8 @@ class buttondown_newsletter extends Plugin {
 
 	public function sendEmail($key)
 	{
-		if ($this->getValue('active')){
+
+		if (!$this->getValue('paused')){
 			$apiKey = $this->getValue('apiKey'); 
 			$sentEmails = $this->getSentEmailsArray();
 			$url  = 'https://api.buttondown.email/v1/emails';
@@ -113,11 +114,6 @@ class buttondown_newsletter extends Plugin {
 			$startDateTS = strtotime($this->getValue('startDate'));
 			$pageDateTS = strtotime($page->dateRaw()); 
 			global $syslog;
-			$syslog->add(array(
-				'dictionaryKey'=>'buttondown-trigger',
-				'notes'=>$key.'_'.$page->dateRaw().'_'.($startDateTS<=$pageDateTS===true?'startdatesmaller':'startdatebigger'),
-				'is_published'=>$page->published()
-			));
 
 			// Only if no newslettetr was sent and page is NOT static, ausosave, nonindex
 			if ($page->published() and 
@@ -149,10 +145,6 @@ class buttondown_newsletter extends Plugin {
 					)
 				);
 				$context  = stream_context_create($options);
-				$syslog->add(array(
-					'dictionaryKey'=>'buttondown-prep',
-					'notes'=>json_encode($data)
-				));
 				$result = file_get_contents($url, false, $context);
 				if ($result === FALSE) { /* Handle error */ } else {
 					// Add key to lsit of sent emails
